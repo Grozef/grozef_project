@@ -193,12 +193,12 @@ class TheBook
         return $this;
     }
 
-    public function getAuthor(): ?BookAuthor
+    public function getBookAuthor(): ?BookAuthor
     {
         return $this->author;
     }
 
-    public function setAuthor(?BookAuthor $author): static
+    public function setBookAuthor(?BookAuthor $author): static
     {
         $this->author = $author;
 
@@ -208,12 +208,12 @@ class TheBook
     /**
      * @return Collection<int, BookPublisher>
      */
-    public function getPublisher(): Collection
+    public function getBookPublisher(): Collection
     {
         return $this->publisher;
     }
 
-    public function addPublisher(BookPublisher $publisher): static
+    public function addBookPublisher(BookPublisher $publisher): static
     {
         if (!$this->publisher->contains($publisher)) {
             $this->publisher->add($publisher);
@@ -222,7 +222,7 @@ class TheBook
         return $this;
     }
 
-    public function removePublisher(BookPublisher $publisher): static
+    public function removeBookPublisher(BookPublisher $publisher): static
     {
         $this->publisher->removeElement($publisher);
 
