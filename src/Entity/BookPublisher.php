@@ -58,7 +58,7 @@ class BookPublisher
     {
         if (!$this->theBooks->contains($theBook)) {
             $this->theBooks->add($theBook);
-            $theBook->addPublisher($this);
+            $theBook->addBookPublisher($this);
         }
 
         return $this;
@@ -67,7 +67,7 @@ class BookPublisher
     public function removeTheBook(TheBook $theBook): static
     {
         if ($this->theBooks->removeElement($theBook)) {
-            $theBook->removePublisher($this);
+            $theBook->removeBookPublisher($this);
         }
 
         return $this;

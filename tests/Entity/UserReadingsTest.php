@@ -23,7 +23,7 @@ class UserBookTest extends TestCase
         $userBook->setUpdatedAt($updatedAt);
         $this->assertSame($updatedAt, $userBook->getUpdatedAt());
 
-        $comment = 'This is a comment';
+        $comment = 'I like cheese';
         $userBook->setComment($comment);
         $this->assertSame($comment, $userBook->getComment());
 

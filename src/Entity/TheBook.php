@@ -46,26 +46,29 @@ class TheBook
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $thumbnail = null;
 
-    #[ORM\ManyToOne(inversedBy: 'theBooks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?BookAuthor $author = null;
-
     /**
      * @var Collection<int, BookPublisher>
      */
     #[ORM\ManyToMany(targetEntity: BookPublisher::class, inversedBy: 'theBooks')]
-    private Collection $publisher;
+    private Collection $publishers;
+
+    /**
+     * @var Collection<int, BookAuthor>
+     */
+    #[ORM\ManyToMany(targetEntity: BookAuthor::class, inversedBy: 'theBooks')]
+    private Collection $authors;
 
     /**
      * @var Collection<int, UserReadings>
      */
     #[ORM\OneToMany(targetEntity: UserReadings::class, mappedBy: 'book')]
-    private Collection $book;
+    private Collection $books;
 
     public function __construct()
     {
-        $this->publisher = new ArrayCollection();
-        $this->book = new ArrayCollection();
+        $this->authors = new ArrayCollection();
+        $this->publishers = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,30 +196,43 @@ class TheBook
         return $this;
     }
 
-    public function getBookAuthor(): ?BookAuthor
+    /**
+     * @return Collection<int, BookAuthor>
+     */
+    public function getBookAuthor(): Collection
     {
-        return $this->author;
+        return $this->authors;
     }
 
-    public function setBookAuthor(?BookAuthor $author): static
+    public function addBookAuthor(BookAuthor $author): static
     {
-        $this->author = $author;
+        if (!$this->authors->contains($author)) {
+            $this->authors->add($author);
+        }
 
         return $this;
     }
+
+    public function removeBookAuthor(BookAuthor $author): static
+    {
+        $this->authors->removeElement($author);
+
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, BookPublisher>
      */
     public function getBookPublisher(): Collection
     {
-        return $this->publisher;
+        return $this->publishers;
     }
 
     public function addBookPublisher(BookPublisher $publisher): static
     {
-        if (!$this->publisher->contains($publisher)) {
-            $this->publisher->add($publisher);
+        if (!$this->publishers->contains($publisher)) {
+            $this->publishers->add($publisher);
         }
 
         return $this;
@@ -224,7 +240,7 @@ class TheBook
 
     public function removeBookPublisher(BookPublisher $publisher): static
     {
-        $this->publisher->removeElement($publisher);
+        $this->publishers->removeElement($publisher);
 
         return $this;
     }
@@ -232,24 +248,24 @@ class TheBook
     /**
      * @return Collection<int, UserReadings>
      */
-    public function getBook(): Collection
+    public function getUserBooks(): Collection
     {
-        return $this->book;
+        return $this->books;
     }
 
-    public function addStatus(UserReadings $book): static
+    public function addUserBook(UserReadings $book): self
     {
-        if (!$this->book->contains($book)) {
-            $this->book->add($book);
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
             $book->setBook($this);
         }
 
         return $this;
     }
 
-    public function removeStatus(UserReadings $book): static
+    public function removeUserBook(UserReadings $book): self
     {
-        if ($this->book->removeElement($book)) {
+        if ($this->books->removeElement($book)) {
             // set the owning side to null (unless already changed)
             if ($book->getBook() === $this) {
                 $book->setBook(null);
@@ -258,4 +274,11 @@ class TheBook
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
+
 }

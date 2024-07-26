@@ -54,62 +54,65 @@ class BookTest extends TestCase
         $this->assertSame($author, $book->getBookAuthor()->first());
 
         $publisher = new BookPublisher();
-        $book->addPublisher($publisher);
+        $book->addBookPublisher($publisher);
         $this->assertSame($publisher, $book->getBookPublisher()->first());
 
         $userBook = new UserReadings();
-        $book->addUserReading($userBook);
-        $this->assertSame($userBook, $book->getUserReadings()->first());
+        $book->addUserBook($userBook);
+        $this->assertSame($userBook, $book->getUserBooks()->first());
+
     }
-
-    public function testAddAndRemoveAuthor(): void
-    {
-        $book = new TheBook();
-        $author1 = new BookAuthor();
-        $author2 = new BookAuthor();
-
-        $book->addBookAuthor($author1);
-        $this->assertTrue($book->getBookAuthors()->contains($author1));
-
-        $book->addBookAuthor($author2);
-        $this->assertTrue($book->getBookAuthors()->contains($author2));
-
-        $book->removeBookAuthor($author1);
-        $this->assertFalse($book->getBookAuthors()->contains($author1));
-    }
-
-    public function testAddAndRemovePublisher(): void
-    {
-        $book = new TheBook();
-        $publisher1 = new BookPublisher();
-        $publisher2 = new BookPublisher();
-
-        $book->addPublisher($publisher1);
-        $this->assertTrue($book->getBookPublishers()->contains($publisher1));
-
-        $book->addPublisher($publisher2);
-        $this->assertTrue($book->getBookPublishers()->contains($publisher2));
-
-        $book->removePublisher($publisher1);
-        $this->assertFalse($book->getBookPublishers()->contains($publisher1));
-    }
-
+ 
     public function testAddAndRemoveUserBook(): void
     {
         $book = new TheBook();
         $userBook1 = new UserReadings();
         $userBook2 = new UserReadings();
 
-        $book->addUserReadings($userBook1);
-        $this->assertTrue($book->getUserReadings()->contains($userBook1));
+        $book->addUserBook($userBook1);
+        $this->assertTrue($book->getUserBooks()->contains($userBook1));
         $this->assertSame($book, $userBook1->getBook());
 
-        $book->addUserReadings($userBook2);
-        $this->assertTrue($book->getUserReadings()->contains($userBook2));
+        $book->addUserBook($userBook2);
+        $this->assertTrue($book->getUserBooks()->contains($userBook2));
         $this->assertSame($book, $userBook2->getBook());
 
-        $book->removeUserReadings($userBook1);
-        $this->assertFalse($book->getUserReadings()->contains($userBook1));
+        $book->removeUserBook($userBook1);
+        $this->assertFalse($book->getUserBooks()->contains($userBook1));
         $this->assertNull($userBook1->getBook());
     }
+
+    public function testGetAndSetBookAuthor(): void
+    {
+        $book = new TheBook();
+        $author1 = new BookAuthor();
+        $author2 = new BookAuthor();
+
+        $book->addBookAuthor($author1);
+        $this->assertTrue($book->getBookAuthor($author1)->contains($author1));
+        $book->removeBookAuthor($author1);
+        $this->assertFalse($book->getBookAuthor($author1)->contains($author1));
+
+        $book->addBookAuthor($author2);
+        $this->assertTrue($book->getBookAuthor($author2)->contains($author2));
+        $book->removeBookAuthor($author2);
+        $this->assertFalse($book->getBookAuthor($author2)->contains($author2));
+    }
+
+    public function testAddAndRemoveBookPublisher(): void
+    {
+        $book = new TheBook();
+        $publisher1 = new BookPublisher();
+        $publisher2 = new BookPublisher();
+        $book->addBookPublisher($publisher1);
+        $this->assertTrue($book->getBookPublisher()->contains($publisher1));
+        $book->removeBookPublisher($publisher1);
+        $this->assertFalse($book->getBookPublisher()->contains($publisher1));
+
+        $book->addBookPublisher($publisher2);
+        $this->assertTrue($book->getBookPublisher()->contains($publisher2));
+        $book->removeBookPublisher($publisher2);
+        $this->assertFalse($book->getBookPublisher()->contains($publisher2));
+    }
+
 }
