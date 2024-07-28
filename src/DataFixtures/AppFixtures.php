@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
     {
         $this->hasher = $hasher;
     }
-    
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -95,8 +95,10 @@ class AppFixtures extends Fixture
             $user = new User();
             $user
                 ->setEmail($faker->email)
-                ->setPassword($faker->password)
                 ->setPseudo($faker->userName);
+            // ->setPassword($faker->password)
+            $hashPassword = $this->hasher->hashPassword($user, 'password');
+            $user->setPassword($hashPassword);
             $manager->persist($user);
 
             $users[] = $user;
@@ -109,9 +111,8 @@ class AppFixtures extends Fixture
             ->setEmail('nounouille@nounouille.com')
             ->setPseudo('nounouille')
             ->setRoles(['ROLE_ADMIN']);
-            // ->setPassword('nounouille')
-            $hashPassword = $this->hasher->hashPassword($user, 'password');
-            $user->setPassword($hashPassword);
+        $hashPassword = $this->hasher->hashPassword($user, 'nounouille');
+        $user->setPassword($hashPassword);
         $manager->persist($user);
 
         $users[] = $user;
