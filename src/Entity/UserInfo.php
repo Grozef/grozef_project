@@ -30,7 +30,7 @@ class UserInfo
     private ?string $pays = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $reg_date = null;
+    private ?\DateTimeImmutable $reg_date = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
@@ -107,12 +107,12 @@ class UserInfo
         return $this;
     }
 
-    public function getRegDate(): ?\DateTimeInterface
+    public function getRegDate(): ?\DateTimeImmutable
     {
         return $this->reg_date;
     }
 
-    public function setRegDate(\DateTimeInterface $reg_date): static
+    public function setRegDate(\DateTimeImmutable $reg_date): static
     {
         $this->reg_date = $reg_date;
 
