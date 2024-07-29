@@ -52,6 +52,7 @@ class AppFixtures extends Fixture
         }
 
         // Création du statut
+        
         $status = [];
         foreach (['to-read', 'reading', 'read'] as $value) {
             $oneStatus = new TheStatus();
@@ -61,6 +62,7 @@ class AppFixtures extends Fixture
         }
 
         // Création des livres
+
         $books = [];
         for ($i = 0; $i < 100; ++$i) {
             $book = new TheBook();
@@ -90,6 +92,7 @@ class AppFixtures extends Fixture
         }
 
         // Création des utilisateurs
+
         $users = [];
         for ($i = 0; $i < 10; ++$i) {
             $user = new User();
@@ -137,6 +140,7 @@ class AppFixtures extends Fixture
         }
 
         // Création des UserReadings, ici des livres, en fonction des utilisateurs
+
         foreach ($users as $user) {
             for ($i = 0; $i < 10; ++$i) {
                 $userBook = new UserReadings();

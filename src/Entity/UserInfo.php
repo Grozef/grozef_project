@@ -29,7 +29,7 @@ class UserInfo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pays = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column]
     private ?\DateTimeImmutable $reg_date = null;
 
     #[ORM\Column(nullable: true)]
