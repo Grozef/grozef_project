@@ -3,12 +3,21 @@
 {% block title %}Search{% endblock %}
 
 {% block body %}
-<style>
 
-</style>
+	<h3>
+		Search Books
+	</h3>
 
-<div class="example-wrapper">
-    <h1>Hello ! </h1>
+	<input
+        class="form-control"
+        type="search"
+        name="search"
+        placeholder="Begin Typing To Search Books"
+        hx-post="/profile/search/api"
+        hx-trigger="keyup changed delay:500ms, search"
+        hx-target="#search-results"
+    >
+	<div id="search-results"></div>
 
-</div>
 {% endblock %}
+
