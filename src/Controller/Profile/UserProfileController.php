@@ -36,9 +36,7 @@ class UserProfileController extends AbstractController
     #[Route('/search/api', name: 'search_api', methods: ['POST'])]
     public function searchApi(Request $request): Response
     {
-        // input --> search
         $search = $request->request->get('search');
-
         return $this->render('user_profile/_api.html.twig', [
             'search' => $this->googleBooksApiService->search($search),
         ]);
